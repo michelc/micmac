@@ -1,0 +1,140 @@
+/*
+* Skeleton V1.1
+* Copyright 2011, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 8/17/2011
+*/
+
+/* Table of Content
+==================================================
+	#Site Styles
+	#Page Styles
+	#Media Queries
+	#Font-Face */
+
+/* #Site Styles
+================================================== */
+
+/* Utilisation de ma police de prédilection */
+body,
+h1, h2, h3, h4, h5, h6
+{
+  font-family: "Century Gothic", "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+}
+
+/* Changement du jeu de couleurs */
+h1 { color: #d2691e; } /* chocolat */
+h2 { color: #888888; } /* gris */
+h3 { color: #39b449; } /* vert */
+
+/* Repasse les liens en bleu */
+a,
+a:visited
+{
+  color: #00f;
+  text-decoration: none;
+}
+a:hover,
+a:focus
+{
+  color: #00f;
+  text-decoration: underline;
+}
+
+/* Fait ressortir la surface de la page */
+body
+{
+	background-color: #eee;
+}
+#page
+{
+	background-color: #fff;
+	padding: 10px;
+}
+
+/* Centre le texte du pied de page */
+footer
+{
+	text-align: center;
+}
+
+/* N cartes postales sur la page index */
+a.card
+{
+	background-color: #f8f8f8;
+	color: #555;
+	display: block;
+	margin-bottom: 20px;
+	padding: 10px;
+	text-align: center;
+}
+
+a.card:hover
+{
+	background-color: #e7f4ff;
+	background-color: #00AEDB;
+	color: #fff;
+}
+
+a.card p
+{
+	margin: 0;
+}
+
+/* 1 carte postale sur la page détail */
+div.card
+{
+	background-color: #fff;
+	color: #555;
+	display: block;
+	margin-bottom: 20px;
+	padding: 10px;
+	text-align: center;
+}
+
+/* #Page Styles
+================================================== */
+
+/* #Media Queries
+================================================== */
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {
+		#page
+		{
+			padding: 0;
+		}
+	}
+
+
+/* #Font-Face
+================================================== */
+/* 	This is the proper syntax for an @font-face file
+		Just create a "fonts" folder at the root,
+		copy your FontName into code below and remove
+		comment brackets */
+
+/*	@font-face {
+	    font-family: 'FontName';
+	    src: url('../fonts/FontName.eot');
+	    src: url('../fonts/FontName.eot?iefix') format('eot'),
+	         url('../fonts/FontName.woff') format('woff'),
+	         url('../fonts/FontName.ttf') format('truetype'),
+	         url('../fonts/FontName.svg#webfontZam02nTh') format('svg');
+	    font-weight: normal;
+	    font-style: normal; }
+*/
