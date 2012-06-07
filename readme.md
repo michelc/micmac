@@ -10,6 +10,7 @@ commune de Saint-Privat en Ardèche.
 
 ## Idées d'évolutions
 
+* Gérer pagination sur la page d'index
 * Vérifier et tester sur mobiles
 * Zommer sur PC bureau en 1200 ?
 * Avoir un titre court (pour l'index) et un titre long (pour le détail)

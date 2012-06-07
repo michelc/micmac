@@ -68,6 +68,15 @@ def quick_and_dirty_db()
   cartes << Carte.new("19-marche-aux-fruits", "Le Marché aux Fruits")
   cartes << Carte.new("20-marche-aux-fruits", "Le Marché aux Fruits")
   cartes << Carte.new("21-vergers", "Vergers vers les Cigales")
+  cartes << Carte.new("22-terrain-municipal", "Terrain Municipal")
+  cartes << Carte.new("23-entree-propriete", "Entrée des Cigales")
+  cartes << Carte.new("24-terrain-sport", "Terrain de Sport")
+  cartes << Carte.new("25-terrain-sport", "Terrain de Sport")
+  cartes << Carte.new("26-batiment-cigales", "Bâtiment des Cigales")
+  cartes << Carte.new("27-route-nationale", "Route Nationale")
+  cartes << Carte.new("28-batiment-cigales", "Bâtiment des Cigales")
+  cartes << Carte.new("29-vue-generale-aerienne", "Vue Générale Aérienne")
+  cartes << Carte.new("30-vue-generale-aerienne", "Vue Générale Aérienne")
   # Renvoie la liste des cartes postales
   cartes
 end
