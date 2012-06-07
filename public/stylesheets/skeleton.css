@@ -52,6 +52,8 @@
     .container .one-third.column                { width: 300px; }
     .container .two-thirds.column               { width: 620px; }
 
+    .container .two-or-three.columns            { width: 300px; }
+
     /* Offsets */
     .container .offset-by-one                   { padding-left: 60px;  }
     .container .offset-by-two                   { padding-left: 120px; }
@@ -105,6 +107,8 @@
         .container .one-third.column                { width: 236px; }
         .container .two-thirds.column               { width: 492px; }
 
+        .container .two-or-three.columns            { width: 364px; }
+
         /* Offsets */
         .container .offset-by-one                   { padding-left: 48px; }
         .container .offset-by-two                   { padding-left: 96px; }
@@ -152,7 +156,8 @@
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column  { width: 300px; }
+        .container .two-thirds.column,
+        .container .two-or-three.columns  { width: 300px; }
 
         /* Offsets */
         .container .offset-by-one,
@@ -202,7 +207,8 @@
         .container .fifteen.columns,
         .container .sixteen.columns,
         .container .one-third.column,
-        .container .two-thirds.column { width: 420px; }
+        .container .two-thirds.column,
+        .container .two-or-three.columns { width: 420px; }
     }
 
 

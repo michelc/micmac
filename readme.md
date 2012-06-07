@@ -6,6 +6,7 @@ commune de Saint-Privat en Ardèche.
 ## Nouveautés
 
 * Pouvoir passer à cp avant / après
+* Adaptation page Index pour les mobiles
 
 ## Idées d'évolutions
 
