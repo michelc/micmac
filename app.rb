@@ -4,6 +4,11 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 
 
+configure do
+  set :protection, :except => :frame_options
+end
+
+
 class Carte
   attr_accessor :url, :titre
 
@@ -21,7 +26,7 @@ get '/' do
 end
 
 
-# Index : affiche la page d'index
+# Carte : affiche une page de détail
 get '/carte/:url' do
   cartes = quick_and_dirty_db()
   # @carte = cartes.select {|c| c.url == params[:url] }[0]
