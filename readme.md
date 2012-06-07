@@ -3,6 +3,10 @@
 Application pour afficher une collection de cartes postales anciennes sur la
 commune de Saint-Privat en Ardèche.
 
+## Nouveautés
+
+* Pouvoir passer à cp avant / après
+
 ## Idées d'évolutions
 
 * Vérifier et tester sur mobiles
@@ -11,7 +15,6 @@ commune de Saint-Privat en Ardèche.
 * Indiquer le nom de l'éditeur
 * Préciser la "couleur" : noir-et-blanc, colorisé, couleur, dessin
 * Ajouter la date / période de la carte (texte libre)
-* Pouvoir passer à cp avant / après
 * Faire un affichage en diaporama ?
 * Utiliser une base de données (ou fichier Yaml ou Json...)
 * Pouvoir mettre à jour la base de données

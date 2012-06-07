@@ -91,7 +91,33 @@ div.card
 	display: block;
 	margin-bottom: 20px;
 	padding: 10px;
+	position: relative;
 	text-align: center;
+}
+div.card a.prev
+{
+  background: url('/images/arrow-prev.png');
+  display: none;
+  height: 48px;
+  left: 50px;
+  position: absolute;
+  top: 200px;
+  width: 49px;
+}
+div.card a.next
+{
+  background: url('/images/arrow-next.png');
+  display: none;
+  height: 48px;
+  right: 50px;
+  position: absolute;
+  top: 200px;
+  width: 49px;
+}
+div.card:hover a.prev,
+div.card:hover a.next
+{
+  display: block;
 }
 
 /* #Page Styles

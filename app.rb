@@ -25,7 +25,15 @@ end
 get '/carte/:url' do
   cartes = quick_and_dirty_db()
   # @carte = cartes.select {|c| c.url == params[:url] }[0]
-  @carte = cartes.find {|c| c.url == params[:url] }
+  # @carte = cartes.find {|c| c.url == params[:url] }
+  index = cartes.index {|c| c.url == params[:url] }
+  @carte = cartes[index]
+  # URL carte précédente
+  @avant = index == 0 ? cartes.length - 1 : index - 1
+  @avant = cartes[@avant].url
+  # URL carte suivante
+  @apres = index == cartes.length - 1 ? 0 : index + 1
+  @apres = cartes[@apres].url
   erb :carte
 end
 
