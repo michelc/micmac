@@ -2,12 +2,27 @@
 
 require 'rubygems'
 require 'sinatra'
+require 'data_mapper'
 require 'sinatra/reloader' if development?
 
 
 configure do
   set :protection, :except => :frame_options
 end
+
+
+DataMapper::Logger.new("debug.log", :debug) if development?
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/cartes.db")
+
+class Carte
+  include DataMapper::Resource
+
+  property :id,           Serial
+  property :titre,        String,     :length => 255, :required => true
+  property :url,          String,     :length => 100, :required => true
+end
+
+DataMapper.auto_upgrade!
 
 
 class Carte_QD
@@ -17,6 +32,20 @@ class Carte_QD
     @url = url
     @titre = titre
   end
+end
+
+
+# Import : importe les cartes dans la bdd
+get '/import' do
+  cartes = quick_and_dirty_db()
+  cartes.each do |carte|
+    carte_db = Carte.new
+    carte_db.titre = carte.titre
+    carte_db.url = carte.url
+    carte_db.save
+  end
+  @cartes = Carte.all(:order => [:id.asc])
+  erb :index
 end
 
 

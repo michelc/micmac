@@ -7,6 +7,7 @@ commune de Saint-Privat en Ardèche.
 
 * Pouvoir passer à cp avant / après
 * Adaptation page Index pour les mobiles
+* Utilisation d'une base de données
 
 ## Idées d'évolutions
 
@@ -18,7 +19,6 @@ commune de Saint-Privat en Ardèche.
 * Préciser la "couleur" : noir-et-blanc, colorisé, couleur, dessin
 * Ajouter la date / période de la carte (texte libre)
 * Faire un affichage en diaporama ?
-* Utiliser une base de données (ou fichier Yaml ou Json...)
 * Pouvoir mettre à jour la base de données
 * Ajouter la date d'enregistrement de la carte
 * Gérer plusieurs scans pour une même carte (recto, verso, qualité)
