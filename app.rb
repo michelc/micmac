@@ -57,14 +57,22 @@ get '/carte/:url' do
 end
 
 
-# Insert : insère de nouvelles cartes
-get '/insert' do
-  Carte.new({url: '31-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  Carte.new({url: '32-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  Carte.new({url: '33-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  Carte.new({url: '34-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  Carte.new({url: '35-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  Carte.new({url: '36-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
-  @cartes = Carte.all(:order => [:id.asc])
-  erb :index
+# Export_yaml : exporte la table cartes au format Yaml
+get '/export_yaml' do
+  cartes = Carte.all(:order => [:id.asc])
+  File.open("public/data.yaml.txt", "w") do |f|
+    f.write(YAML::dump(cartes))
+  end
+  "export => #{cartes.count}"
+end
+
+
+# Import_yaml : importe la table cartes
+get '/import_yaml' do
+  Carte.destroy
+  cartes = YAML::load(File.open("public/data.yaml.txt", "r"))
+  cartes.each do |data|
+    Carte.new(data).save
+  end
+  "import => #{cartes.count}"
 end
