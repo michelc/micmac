@@ -55,3 +55,16 @@ get '/carte/:url' do
   # Affiche la vue détail
   erb :carte
 end
+
+
+# Insert : insère de nouvelles cartes
+get '/insert' do
+  Carte.new({url: '31-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  Carte.new({url: '32-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  Carte.new({url: '33-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  Carte.new({url: '34-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  Carte.new({url: '35-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  Carte.new({url: '36-vue-generale-aerienne', titre: 'Vue Générale Aérienne'}).save
+  @cartes = Carte.all(:order => [:id.asc])
+  erb :index
+end
