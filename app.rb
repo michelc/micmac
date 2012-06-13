@@ -31,12 +31,46 @@ PAGE_SIZE = 6.0
 
 helpers do
 
-  def pagination(nb_pages)
-    pagination = ""
-    nb_pages.times do |page|
-      pagination << " <a href='/page/#{page + 1}'>#{page + 1}</a>"
+  def pagination(page_courante, nb_pages)
+    " début de liste"
+    pagination = "<ul class='pagination'>\n"
+    # page avant
+    if page_courante > 1 then
+      pagination << pagination_lien(page_courante - 1, "«", 0)
+    else
+      pagination << "  <li><span>«</span></li>"
     end
+    # 6 pages autour de la page en cours
+    au = page_courante + 3 < nb_pages ? page_courante + 3 : nb_pages
+    du = au - 5
+    if du < 1
+      du = 1
+      au = du + 5 < nb_pages ? du + 5 : nb_pages
+    end
+    (du..au).each do |page|
+      pagination << pagination_lien(page, page.to_s, page_courante)
+    end
+    # page apres
+    if page_courante < nb_pages then
+      pagination << pagination_lien(page_courante + 1, "»", 0)
+    else
+      pagination << "  <li><span>»</span></li>"
+    end
+    # fin de liste
+    pagination << "</ul>\n"
     pagination
+  end
+
+  def pagination_lien(page, text, page_courante)
+    un_lien = "  <li>"
+    if page == page_courante
+      un_lien << "<strong>#{text}</strong>"
+    else
+      un_lien << if page == 1 then "<a href='/'>" else "<a href='/page/#{page}'>" end
+      un_lien << "#{text}</a>"
+    end
+    un_lien << "</li>\n"
+    un_lien
   end
 
 end
@@ -45,6 +79,7 @@ end
 # Index : affiche la page d'index
 get '/' do
   @nb_pages = (Carte.all().count / PAGE_SIZE).ceil
+  @num_page = 1
   @cartes = Carte.all(:limit => PAGE_SIZE, :order => [:id.asc])
   erb :index
 end
@@ -53,9 +88,9 @@ end
 # Index/# : affiche une page de 6 cp
 get '/page/:page' do
   @nb_pages = (Carte.all().count / PAGE_SIZE).ceil
-  page = Integer(params[:page])
-  redirect "/" unless page.between?(1, @nb_pages)
-  row_end = page * PAGE_SIZE
+  @num_page = params[:page].to_i
+  redirect "/" unless @num_page.between?(1, @nb_pages)
+  row_end = @num_page * PAGE_SIZE
   row_start = row_end - PAGE_SIZE
   @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
   erb :index

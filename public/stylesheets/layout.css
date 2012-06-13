@@ -62,8 +62,7 @@ a.card
 
 a.card:hover
 {
-	background-color: #e7f4ff;
-	background-color: #00AEDB;
+	background-color: #00aedb;
 	color: #fff;
 }
 
@@ -107,6 +106,40 @@ div.card:hover a.prev,
 div.card:hover a.next
 {
   display: block;
+}
+
+/* liste pour pagination */
+.pagination
+{
+  text-align: center;
+}
+.pagination li
+{
+  display: inline;
+}
+.pagination a,
+.pagination strong,
+.pagination span
+{
+  background-color: #e8e8e8;
+  color: #555;
+  margin: 0 1px;
+  padding: 3px 8px;
+}
+.pagination a:hover
+{
+  background-color: #00aedb;
+  color: #fff;
+}
+.pagination strong
+{
+  background-color: #fff;
+  font-weight: normal;
+}
+.pagination span
+{
+  background-color: #fff;
+  color: #ccc;
 }
 
 /* #Page Styles
