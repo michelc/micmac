@@ -32,14 +32,13 @@ PAGE_SIZE = 6.0
 helpers do
 
   def pagination(page_courante, nb_pages)
-    " début de liste"
-    pagination = "<ul class='pagination'>\n"
+    pagination = []
     # page avant
-    if page_courante > 1 then
-      pagination << pagination_lien(page_courante - 1, "«", 0)
-    else
-      pagination << "  <li><span>«</span></li>"
-    end
+    pagination << if page_courante > 1 then
+                    pagination_lien("<", page_courante - 1)
+                  else
+                    pagination_lien("<")
+                  end
     # 6 pages autour de la page en cours
     au = page_courante + 3 < nb_pages ? page_courante + 3 : nb_pages
     du = au - 5
@@ -48,28 +47,33 @@ helpers do
       au = du + 5 < nb_pages ? du + 5 : nb_pages
     end
     (du..au).each do |page|
-      pagination << pagination_lien(page, page.to_s, page_courante)
+      pagination << pagination_lien(page.to_s, page, page_courante)
     end
     # page apres
-    if page_courante < nb_pages then
-      pagination << pagination_lien(page_courante + 1, "»", 0)
-    else
-      pagination << "  <li><span>»</span></li>"
-    end
+    pagination << if page_courante < nb_pages then
+                    pagination_lien(">", page_courante + 1)
+                  else
+                    pagination_lien(">")
+                  end
     # fin de liste
-    pagination << "</ul>\n"
     pagination
   end
 
-  def pagination_lien(page, text, page_courante)
-    un_lien = "  <li>"
-    if page == page_courante
-      un_lien << "<strong>#{text}</strong>"
+  def pagination_lien(texte, destination = nil, page_courante = 0)
+    case destination
+    when nil then
+      # pas de page de destination => pas de lien
+      un_lien = { text: texte, href: nil }
+    when page_courante then
+      # page de destination est la page en cours => pas de lien
+      un_lien = { text: texte, href: nil, here: true }
+    when 1 then
+      # page de destination est 1° page => lien vers racine
+      un_lien = { text: texte, href: "/" }
     else
-      un_lien << if page == 1 then "<a href='/'>" else "<a href='/page/#{page}'>" end
-      un_lien << "#{text}</a>"
+      # lien vers la page de destination
+      un_lien = { text: texte, href: "/page/#{destination}" }
     end
-    un_lien << "</li>\n"
     un_lien
   end
 
@@ -78,21 +82,22 @@ end
 
 # Index : affiche la page d'index
 get '/' do
-  @nb_pages = (Carte.all().count / PAGE_SIZE).ceil
-  @num_page = 1
   @cartes = Carte.all(:limit => PAGE_SIZE, :order => [:id.asc])
+  nb_pages = (Carte.all().count / PAGE_SIZE).ceil
+  @pagination = pagination(1, nb_pages)
   erb :index
 end
 
 
 # Index/# : affiche une page de 6 cp
 get '/page/:page' do
-  @nb_pages = (Carte.all().count / PAGE_SIZE).ceil
-  @num_page = params[:page].to_i
-  redirect "/" unless @num_page.between?(1, @nb_pages)
-  row_end = @num_page * PAGE_SIZE
+  nb_pages = (Carte.all().count / PAGE_SIZE).ceil
+  num_page = params[:page].to_i
+  redirect "/" unless num_page.between?(1, nb_pages)
+  row_end = num_page * PAGE_SIZE
   row_start = row_end - PAGE_SIZE
   @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  @pagination = pagination(num_page, nb_pages)
   erb :index
 end
 

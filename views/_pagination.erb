@@ -1,0 +1,13 @@
+<ul class="pagination">
+<% @pagination.each do |link| %>
+  <li>
+    <% if link[:here] %>
+      <strong><%= link[:text] %></strong>
+    <% elsif link[:href] == nil %>
+      <span><%= link[:text] %></span>
+    <% else %>
+      <a href="<%= link[:href] %>"><%= link[:text] %></a>
+    <% end %>
+  </li>
+<% end %>
+</ul>
