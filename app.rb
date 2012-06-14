@@ -127,6 +127,28 @@ get '/carte/:url' do
 end
 
 
+# Carte.Edit : affiche un formulaire pour modifier une carte
+get '/carte/edit/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  erb :edit
+end
+
+
+# Carte.Update : met à jour une fiche carte
+put '/carte/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  if @carte.update(params[:carte])
+    status 201
+    redirect "/"
+  else
+    status 400
+    erb :edit
+  end
+end
+
+
 # Export_yaml : exporte la table cartes au format Yaml
 get '/export_yaml' do
   cartes = Carte.all(:order => [:id.asc])
