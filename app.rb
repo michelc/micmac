@@ -34,11 +34,7 @@ helpers do
   def pagination(page_courante, nb_pages)
     pagination = []
     # page avant
-    pagination << if page_courante > 1 then
-                    pagination_lien("<", page_courante - 1)
-                  else
-                    pagination_lien("<")
-                  end
+    pagination << pagination_lien("<", page_courante - 1)
     # 6 pages autour de la page en cours
     au = page_courante + 3 < nb_pages ? page_courante + 3 : nb_pages
     du = au - 5
@@ -50,18 +46,15 @@ helpers do
       pagination << pagination_lien(page.to_s, page, page_courante)
     end
     # page apres
-    pagination << if page_courante < nb_pages then
-                    pagination_lien(">", page_courante + 1)
-                  else
-                    pagination_lien(">")
-                  end
+    page_courante = -1 if page_courante == nb_pages
+    pagination << pagination_lien(">", page_courante + 1)
     # fin de liste
     pagination
   end
 
-  def pagination_lien(texte, destination = nil, page_courante = 0)
+  def pagination_lien(texte, destination, page_courante = 0)
     case destination
-    when nil then
+    when 0 then
       # pas de page de destination => pas de lien
       un_lien = { text: texte, href: nil }
     when page_courante then
