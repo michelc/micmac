@@ -188,21 +188,21 @@ end
 get '/carte/:url' do
   # Carte postale correspondant à l'URL
   @carte = Carte.first({url: params[:url]})
-  # URL carte précédente
-  avant = Carte.last({:fields => [:url],
-                      :order => :id.asc,
-                      :id.lt => @carte.id})
-  # (ou la dernière carte)
-  avant = Carte.last({:fields => [:url],
-                      :order => :id.asc}) unless avant
-  @avant = avant[:url]
-  # URL carte suivante
-  apres = Carte.first({:fields => [:url],
+  # URL carte précédente (insérée en base après celle-ci)
+  avant = Carte.first({:fields => [:url],
                        :order => :id.asc,
                        :id.gt => @carte.id})
-  # (ou la première carte)
-  apres = Carte.first({:fields => [:url],
-                       :order => :id.asc}) unless apres
+  # (ou la dernière carte insérée)
+  avant = Carte.first({:fields => [:url],
+                       :order => :id.asc}) unless avant
+  @avant = avant[:url]
+  # URL carte suivante (insérée en base avant celle-ci)
+  apres = Carte.last({:fields => [:url],
+                      :order => :id.asc,
+                      :id.lt => @carte.id})
+  # (ou la première carte insérée)
+  apres = Carte.last({:fields => [:url],
+                      :order => :id.asc}) unless apres
   @apres = apres[:url]
   # Affiche la vue détail
   erb :carte
