@@ -105,6 +105,23 @@ end
 # Carte.Create : enregistre une nouvelle carte
 post '/carte' do
   @carte = Carte.new(params[:carte])
+  # Vérifie que la carte existe
+  carte_src = params[:carte][:url]
+  unless carte_src.empty?
+    snapshot = "public/cartes/#{carte_src}.jpg"
+    unless File.file?(snapshot)
+      status 400
+      @carte.errors.add(:url, "Url must exist")
+      return erb :new
+    end
+    fullsize = "public/cartes/#{carte_src}-900.jpg"
+    unless File.file?(fullsize)
+      status 400
+      @carte.errors.add(:url, "Fullsize Url must exist")
+      return erb :new
+    end
+  end
+  # Enregistre la carte
   if @carte.save
     status 201
     redirect "/"
