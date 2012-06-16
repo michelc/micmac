@@ -81,7 +81,8 @@ get '/' do
   num_page = nb_pages
   row_end = num_page * PAGE_SIZE
   row_start = row_end - PAGE_SIZE
-  @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  @cartes = cartes.to_a.reverse
   @pagination = pagination(num_page, nb_pages, true)
   erb :index
 end
@@ -94,7 +95,8 @@ get '/page/:page' do
   redirect "/" unless num_page.between?(1, nb_pages)
   row_end = num_page * PAGE_SIZE
   row_start = row_end - PAGE_SIZE
-  @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  @cartes = cartes.to_a.reverse
   @pagination = pagination(num_page, nb_pages, true)
   erb :index
 end
