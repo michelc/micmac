@@ -1,10 +1,11 @@
+<p><a href="/carte/new">new</a></p>
 <% @cartes.each do |carte| %>
 <article class="two-or-three columns">
   <a class="card" href="/carte/<%= carte.url %>">
     <img src="/cartes/<%= carte.url %>.jpg" alt="<%= carte.titre %>" width="280px" height="200px" />
     <p><%= carte.titre %></p>
   </a>
-  <p><a href="/carte/edit/<%= carte.id %>">màj</a></p>
+  <p><a href="/carte/edit/<%= carte.id %>">edit</a></p>
 </article>
 <% end %>
 <div class="sixteen columns">

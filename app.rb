@@ -95,6 +95,48 @@ get '/page/:page' do
 end
 
 
+# Carte.New : formulaire pour créer une carte
+get '/carte/new' do
+  @carte = Carte.new
+  erb :new
+end
+
+
+# Carte.Create : enregistre une nouvelle carte
+post '/carte' do
+  @carte = Carte.new(params[:carte])
+  if @carte.save
+    status 201
+    redirect "/"
+  else
+    status 400
+    erb :new
+  end
+end
+
+
+# Carte.Edit : formulaire pour modifier une carte
+get '/carte/edit/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  erb :edit
+end
+
+
+# Carte.Update : met à jour une carte
+put '/carte/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  if @carte.update(params[:carte])
+    status 201
+    redirect "/"
+  else
+    status 400
+    erb :edit
+  end
+end
+
+
 # Carte : affiche une page de détail
 get '/carte/:url' do
   # Carte postale correspondant à l'URL
@@ -117,28 +159,6 @@ get '/carte/:url' do
   @apres = apres[:url]
   # Affiche la vue détail
   erb :carte
-end
-
-
-# Carte.Edit : affiche un formulaire pour modifier une carte
-get '/carte/edit/:id' do
-  @carte = Carte.get(params[:id])
-  @carte_src = @carte.url
-  erb :edit
-end
-
-
-# Carte.Update : met à jour une fiche carte
-put '/carte/:id' do
-  @carte = Carte.get(params[:id])
-  @carte_src = @carte.url
-  if @carte.update(params[:carte])
-    status 201
-    redirect "/"
-  else
-    status 400
-    erb :edit
-  end
 end
 
 
