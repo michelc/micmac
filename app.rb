@@ -25,7 +25,7 @@ end
 DataMapper.auto_upgrade!
 
 
-PAGE_SIZE = 6.0
+PAGE_SIZE = 6
 
 # ---------- Helpers ----------
 
@@ -76,7 +76,7 @@ end
 # Index : affiche la page d'index
 get '/' do
   @cartes = Carte.all(:limit => PAGE_SIZE, :order => [:id.asc])
-  nb_pages = (Carte.all().count / PAGE_SIZE).ceil
+  nb_pages = (Carte.all().count / PAGE_SIZE.to_f).ceil
   @pagination = pagination(1, nb_pages)
   erb :index
 end
@@ -84,7 +84,7 @@ end
 
 # Index/# : affiche une page de 6 cp
 get '/page/:page' do
-  nb_pages = (Carte.all().count / PAGE_SIZE).ceil
+  nb_pages = (Carte.all().count / PAGE_SIZE.to_f).ceil
   num_page = params[:page].to_i
   redirect "/" unless num_page.between?(1, nb_pages)
   row_end = num_page * PAGE_SIZE
