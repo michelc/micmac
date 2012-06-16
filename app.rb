@@ -76,7 +76,6 @@ end
 
 # Index : affiche la page d'index
 get '/' do
-  @cartes = Carte.all(:limit => PAGE_SIZE, :order => [:id.asc])
   nb_pages = (Carte.all().count / PAGE_SIZE.to_f).ceil
   num_page = nb_pages
   row_end = num_page * PAGE_SIZE
