@@ -137,6 +137,29 @@ put '/carte/:id' do
 end
 
 
+# Carte.Delete : formulaire confirmation suppression d'une carte
+get '/carte/delete/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  erb :delete
+end
+
+
+# Carte.Destroy : supprime une carte
+delete '/carte/:id' do
+  @carte = Carte.get(params[:id])
+  @carte_src = @carte.url
+  if (@carte.destroy)
+    status 200
+    redirect "/"
+  else
+    status 400
+    erb :delete
+  end
+end
+
+
+
 # Carte : affiche une page de détail
 get '/carte/:url' do
   # Carte postale correspondant à l'URL

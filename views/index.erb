@@ -5,7 +5,10 @@
     <img src="/cartes/<%= carte.url %>.jpg" alt="<%= carte.titre %>" width="280px" height="200px" />
     <p><%= carte.titre %></p>
   </a>
-  <p><a href="/carte/edit/<%= carte.id %>">edit</a></p>
+  <p>
+    <a href="/carte/edit/<%= carte.id %>">edit</a>
+    <a href="/carte/delete/<%= carte.id %>">del</a>
+  </p>
 </article>
 <% end %>
 <div class="sixteen columns">
