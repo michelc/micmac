@@ -71,34 +71,37 @@ helpers do
     un_lien
   end
 
+  def get_page(num_page)
+    nb_cartes = Carte.all().count
+    nb_pages = (nb_cartes / PAGE_SIZE.to_f).ceil
+    if (num_page == -1)
+      # page racine
+      num_page = nb_pages
+      row_end = nb_cartes
+    else
+      # autre page
+      redirect "/" unless num_page.between?(1, nb_pages)
+      row_end = num_page * PAGE_SIZE
+    end
+    row_start = row_end - PAGE_SIZE
+    cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+    @cartes = cartes.to_a.reverse
+    @pagination = pagination(num_page, nb_pages, true)
+    erb :index
+  end
+
 end
 
 
 # Index : affiche la page d'index
 get '/' do
-  nb_cartes = Carte.all().count
-  nb_pages = (nb_cartes / PAGE_SIZE.to_f).ceil
-  num_page = nb_pages
-  row_end = nb_cartes
-  row_start = row_end - PAGE_SIZE
-  cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
-  @cartes = cartes.to_a.reverse
-  @pagination = pagination(num_page, nb_pages, true)
-  erb :index
+  get_page(-1)
 end
 
 
-# Index/# : affiche une page de 6 cp
+# Index/# : affiche une page de 6 cartes postales
 get '/page/:page' do
-  nb_pages = (Carte.all().count / PAGE_SIZE.to_f).ceil
-  num_page = params[:page].to_i
-  redirect "/" unless num_page.between?(1, nb_pages)
-  row_end = num_page * PAGE_SIZE
-  row_start = row_end - PAGE_SIZE
-  cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
-  @cartes = cartes.to_a.reverse
-  @pagination = pagination(num_page, nb_pages, true)
-  erb :index
+  get_page(params[:page].to_i)
 end
 
 
