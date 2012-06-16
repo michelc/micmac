@@ -9,9 +9,12 @@ commune de Saint-Privat en Ardèche.
 * Adaptation page Index pour les mobiles
 * Utilisation d'une base de données
 * Gérer pagination sur la page d'index
+* Pouvoir mettre à jour la base de données
+* Affichage inversé (de plus récent au plus ancien)
 
 ## Idées d'évolutions
 
+* Bloquer màj base de données sur Heroku
 * Vérifier et tester sur mobiles
 * Zommer sur PC bureau en 1200 ?
 * Avoir un titre court (pour l'index) et un titre long (pour le détail)
@@ -19,7 +22,6 @@ commune de Saint-Privat en Ardèche.
 * Préciser la "couleur" : noir-et-blanc, colorisé, couleur, dessin
 * Ajouter la date / période de la carte (texte libre)
 * Faire un affichage en diaporama ?
-* Pouvoir mettre à jour la base de données
 * Ajouter la date d'enregistrement de la carte
 * Gérer plusieurs scans pour une même carte (recto, verso, qualité)
 * Gérer une zone de description
