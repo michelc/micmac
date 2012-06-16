@@ -31,10 +31,11 @@ PAGE_SIZE = 6
 
 helpers do
 
-  def pagination(page_courante, nb_pages)
+  def pagination(page_courante, nb_pages, reverse)
     pagination = []
+    page_racine = reverse ? nb_pages : 1
     # page avant
-    pagination << pagination_lien("<", page_courante - 1)
+    pagination << pagination_lien(reverse ? ">" : "<", page_courante - 1, page_racine)
     # 6 pages autour de la page en cours
     au = page_courante + 3 < nb_pages ? page_courante + 3 : nb_pages
     du = au - 5
@@ -43,16 +44,16 @@ helpers do
       au = du + 5 < nb_pages ? du + 5 : nb_pages
     end
     (du..au).each do |page|
-      pagination << pagination_lien(page.to_s, page, page_courante)
+      pagination << pagination_lien(page.to_s, page, page_racine, page_courante)
     end
-    # page apres
+    # page après
     page_courante = -1 if page_courante == nb_pages
-    pagination << pagination_lien(">", page_courante + 1)
+    pagination << pagination_lien(reverse ? "<" : ">", page_courante + 1, page_racine)
     # fin de liste
-    pagination
+    reverse ? pagination.reverse : pagination
   end
 
-  def pagination_lien(texte, destination, page_courante = 0)
+  def pagination_lien(texte, destination, page_racine, page_courante = 0)
     case destination
     when 0 then
       # pas de page de destination => pas de lien
@@ -60,8 +61,8 @@ helpers do
     when page_courante then
       # page de destination est la page en cours => pas de lien
       un_lien = { text: texte, href: nil, here: true }
-    when 1 then
-      # page de destination est 1° page => lien vers racine
+    when page_racine then
+      # page de destination est la page par défaut => lien vers racine
       un_lien = { text: texte, href: "/" }
     else
       # lien vers la page de destination
@@ -77,7 +78,11 @@ end
 get '/' do
   @cartes = Carte.all(:limit => PAGE_SIZE, :order => [:id.asc])
   nb_pages = (Carte.all().count / PAGE_SIZE.to_f).ceil
-  @pagination = pagination(1, nb_pages)
+  num_page = nb_pages
+  row_end = num_page * PAGE_SIZE
+  row_start = row_end - PAGE_SIZE
+  @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
+  @pagination = pagination(num_page, nb_pages, true)
   erb :index
 end
 
@@ -90,7 +95,7 @@ get '/page/:page' do
   row_end = num_page * PAGE_SIZE
   row_start = row_end - PAGE_SIZE
   @cartes = Carte.all(:offset => row_start, :limit => PAGE_SIZE, :order => [:id.asc])
-  @pagination = pagination(num_page, nb_pages)
+  @pagination = pagination(num_page, nb_pages, true)
   erb :index
 end
 
