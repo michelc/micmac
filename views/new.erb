@@ -1,7 +1,7 @@
 <% if @carte.errors.any? %>
   <ul>
   <% @carte.errors.each do |error| %><li><%= error %></li><% end %>
-  </li>
+  </ul>
 <% end %>
 
 <form action="/carte" method="post">
