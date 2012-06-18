@@ -1,4 +1,4 @@
-<p><a href="/carte/new">new</a></p>
+<p><%= admin_link("new", "new") %></p>
 <% @cartes.each do |carte| %>
 <article class="two-or-three columns">
   <a class="card" href="/carte/<%= carte.url %>">
@@ -6,8 +6,8 @@
     <p><%= carte.titre %></p>
   </a>
   <p>
-    <a href="/carte/edit/<%= carte.id %>">edit</a>
-    <a href="/carte/delete/<%= carte.id %>">del</a>
+    <%= admin_link("edit", "edit", carte.id) %>
+    <%= admin_link("del", "delete", carte.id) %>
   </p>
 </article>
 <% end %>

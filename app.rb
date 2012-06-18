@@ -31,6 +31,17 @@ PAGE_SIZE = 6
 
 helpers do
 
+  def admin_link(text, action, id = nil)
+    if !development?
+      # administration autorisé en mode développement uniquement
+      ""
+    elsif id
+      "<a href='/admin/#{action}/#{id}'>#{text}</a>"
+    else
+      "<a href='/admin/#{action}'>#{text}</a>"
+    end
+  end
+
   def pagination(page_courante, nb_pages, reverse)
     pagination = []
     page_racine = reverse ? nb_pages : 1
@@ -93,6 +104,11 @@ helpers do
 end
 
 
+before '/admin/*' do
+  halt [ 401, 'Not Authorized' ] unless development?
+end
+
+
 # Index : affiche la page d'index
 get '/' do
   get_page(-1)
@@ -106,14 +122,14 @@ end
 
 
 # Carte.New : formulaire pour créer une carte
-get '/carte/new' do
+get '/admin/new' do
   @carte = Carte.new
   erb :new
 end
 
 
 # Carte.Create : enregistre une nouvelle carte
-post '/carte' do
+post '/admin' do
   @carte = Carte.new(params[:carte])
   # Vérifie que la carte existe
   carte_src = params[:carte][:url]
@@ -143,7 +159,7 @@ end
 
 
 # Carte.Edit : formulaire pour modifier une carte
-get '/carte/edit/:id' do
+get '/admin/edit/:id' do
   @carte = Carte.get(params[:id])
   @carte_src = @carte.url
   erb :edit
@@ -151,7 +167,7 @@ end
 
 
 # Carte.Update : met à jour une carte
-put '/carte/:id' do
+put '/admin/:id' do
   @carte = Carte.get(params[:id])
   @carte_src = @carte.url
   if @carte.update(params[:carte])
@@ -165,7 +181,7 @@ end
 
 
 # Carte.Delete : formulaire confirmation suppression d'une carte
-get '/carte/delete/:id' do
+get '/admin/delete/:id' do
   @carte = Carte.get(params[:id])
   @carte_src = @carte.url
   erb :delete
@@ -173,7 +189,7 @@ end
 
 
 # Carte.Destroy : supprime une carte
-delete '/carte/:id' do
+delete '/admin/:id' do
   @carte = Carte.get(params[:id])
   @carte_src = @carte.url
   if (@carte.destroy)
@@ -184,7 +200,6 @@ delete '/carte/:id' do
     erb :delete
   end
 end
-
 
 
 # Carte : affiche une page de détail
