@@ -101,6 +101,28 @@ helpers do
     erb :index
   end
 
+  def cartes_utilisables
+    # les cartes présentes dans le répertoire
+    cartes_dossier = Dir.entries("public/cartes") - [".", ".."]
+    cartes_dossier.keep_if { |filename| !filename.end_with?("-900.jpg") }
+    cartes_dossier.map! { |filename| filename.sub('.jpg', "") }
+    # les cartes déjà en base de données
+    cartes_base = []
+    Carte.all(fields: [:url], order: :url.asc).each { |carte| cartes_base << carte.url }
+    # les cartes utilisables
+    cartes_dossier - cartes_base
+  end
+
+  def select_options(list, selected_value)
+    html = "<option id=''></option>"
+    list.each do |item|
+      html << "\n<option "
+      html << "selected " if item == selected_value
+      html << "id='#{item}'>#{item}</option>"
+    end
+    html
+  end
+
 end
 
 
@@ -124,6 +146,7 @@ end
 # Carte.New : formulaire pour créer une carte
 get '/admin/new' do
   @carte = Carte.new
+  @urls_utilisables = cartes_utilisables()
   erb :new
 end
 
@@ -131,6 +154,7 @@ end
 # Carte.Create : enregistre une nouvelle carte
 post '/admin' do
   @carte = Carte.new(params[:carte])
+  @urls_utilisables = cartes_utilisables()
   # Vérifie que la carte existe
   carte_src = params[:carte][:url]
   unless carte_src.empty?

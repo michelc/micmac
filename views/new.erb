@@ -16,7 +16,9 @@
       <label for="url">URL de la carte *</label>
     </div>
     <div class="eleven columns omega">
-      <input id="url" name="carte[url]" type="text" value="<%= @carte.url %>" />
+      <select id="url" name="carte[url]">
+        <%= select_options(@urls_utilisables, @carte.url) %>
+      </select>
     </div>
     <p class="offset-by-five eleven columns alpha">
       <input type="submit" value="Enregistrer cette carte" />
