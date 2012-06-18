@@ -19,7 +19,7 @@ class Carte
 
   property :id,           Serial
   property :titre,        String,     :length => 255, :required => true
-  property :url,          String,     :length => 100, :required => true
+  property :url,          String,     :length => 100, :required => true, :unique => true
 end
 
 DataMapper.auto_upgrade!
