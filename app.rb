@@ -18,8 +18,16 @@ class Carte
   include DataMapper::Resource
 
   property :id,           Serial
-  property :titre,        String,     :length => 255, :required => true
-  property :url,          String,     :length => 100, :required => true, :unique => true
+  property :titre,        String,     :length => 255,
+                                      :required => true,
+                                      :message => "Le titre est obligatoire"
+  property :url,          String,     :length => 100,
+                                      :required => true,
+                                      :unique => true,
+                                      :messages => {
+                                        :presence  => "L'URL est obligatoire",
+                                        :is_unique => "Cette URL est déjà utilisée"
+                                      }
 end
 
 DataMapper.auto_upgrade!
@@ -161,13 +169,13 @@ post '/admin' do
     snapshot = "public/cartes/#{carte_src}.jpg"
     unless File.file?(snapshot)
       status 400
-      @carte.errors.add(:url, "Url must exist")
+      @carte.errors.add(:url, "#{carte_src}.jpg n'existe pas")
       return erb :new
     end
     fullsize = "public/cartes/#{carte_src}-900.jpg"
     unless File.file?(fullsize)
       status 400
-      @carte.errors.add(:url, "Fullsize Url must exist")
+      @carte.errors.add(:url, "#{carte_src}-900.jpg n'existe pas")
       return erb :new
     end
   end
