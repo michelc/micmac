@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
+require 'cgi'
 require 'sinatra/reloader' if development?
 
 
@@ -129,6 +130,10 @@ helpers do
       html << "id='#{item}'>#{item}</option>"
     end
     html
+  end
+
+  def unescapeHTML(text)
+    CGI.unescapeHTML(text)
   end
 
 end

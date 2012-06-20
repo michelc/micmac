@@ -1,6 +1,6 @@
 <% if @carte.errors.any? %>
   <ul>
-  <% @carte.errors.each do |error| %><li><%= error %></li><% end %>
+  <% @carte.errors.each do |error| %><li><%= unescapeHTML(error.join(",")) %></li><% end %>
   </ul>
 <% end %>
 
